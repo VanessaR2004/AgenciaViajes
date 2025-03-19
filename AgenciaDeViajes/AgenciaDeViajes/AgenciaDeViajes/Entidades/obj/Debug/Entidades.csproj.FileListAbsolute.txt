@@ -1,0 +1,12 @@
+C:\Users\Sala_\source\repos\AgenciaDeViajes\Entidades\bin\Debug\Entidades.dll
+C:\Users\Sala_\source\repos\AgenciaDeViajes\Entidades\bin\Debug\Entidades.pdb
+C:\Users\Sala_\source\repos\AgenciaDeViajes\Entidades\obj\Debug\Entidades.csproj.AssemblyReference.cache
+C:\Users\Sala_\source\repos\AgenciaDeViajes\Entidades\obj\Debug\Entidades.csproj.CoreCompileInputs.cache
+C:\Users\Sala_\source\repos\AgenciaDeViajes\Entidades\obj\Debug\Entidades.dll
+C:\Users\Sala_\source\repos\AgenciaDeViajes\Entidades\obj\Debug\Entidades.pdb
+C:\Users\ZV-ANALISTAJUNIOR-1\Downloads\AgenciaDeViajes\AgenciaDeViajes\Entidades\bin\Debug\Entidades.dll
+C:\Users\ZV-ANALISTAJUNIOR-1\Downloads\AgenciaDeViajes\AgenciaDeViajes\Entidades\bin\Debug\Entidades.pdb
+C:\Users\ZV-ANALISTAJUNIOR-1\Downloads\AgenciaDeViajes\AgenciaDeViajes\Entidades\obj\Debug\Entidades.csproj.AssemblyReference.cache
+C:\Users\ZV-ANALISTAJUNIOR-1\Downloads\AgenciaDeViajes\AgenciaDeViajes\Entidades\obj\Debug\Entidades.csproj.CoreCompileInputs.cache
+C:\Users\ZV-ANALISTAJUNIOR-1\Downloads\AgenciaDeViajes\AgenciaDeViajes\Entidades\obj\Debug\Entidades.dll
+C:\Users\ZV-ANALISTAJUNIOR-1\Downloads\AgenciaDeViajes\AgenciaDeViajes\Entidades\obj\Debug\Entidades.pdb

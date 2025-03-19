@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #9b85b2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+
+
+        .login-container {
+            background-color: #bcb6c2;
+            padding: 88px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+            opacity: 0.7;
+
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Iniciar Sesión</h2>
+        @if (ViewBag.MensajeError != null)
+        {
+            <p style="color: red;">@ViewBag.MensajeError</p>
+        }
+
+        @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+        {
+            <label>Usuario:</label>
+            <input type="text" name="usuario" class="form-control" />
+
+            <label>Contraseña:</label>
+            <input type="password" name="password" class="form-control" />
+
+            <!-- Campo oculto para enviar la bandera -->
+            <input type="hidden" id="bandera" name="bandera" value="">
+
+            <br />
+            <!-- Botón para Iniciar Sesión -->
+            <button type="submit" onclick="setBandera('login')">Ingresar</button>
+
+            <!-- Botón para Recuperar Contraseña -->
+            <button type="submit" onclick="setBandera('recuperar')">Recuperar Contraseña</button>
+            <!-- Botón para Recuperar Contraseña -->
+            <button type="submit" onclick="setBandera('registrar')">Registrase</button>
+        }
+
+    </div>
+
+    <script>
+        function setBandera(valor) {
+            document.getElementById("bandera").value = valor;
+        }
+    </script>
+
+
+</body>
+</html>
