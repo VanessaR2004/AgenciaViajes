@@ -20,3 +20,14 @@ C:\Users\ZV-ANALISTAJUNIOR-1\Downloads\AgenciaDeViajes\AgenciaDeViajes\CapaNegoc
 C:\Users\ZV-ANALISTAJUNIOR-1\Downloads\AgenciaDeViajes\AgenciaDeViajes\CapaNegocio\obj\Debug\Negocio.csproj.CopyComplete
 C:\Users\ZV-ANALISTAJUNIOR-1\Downloads\AgenciaDeViajes\AgenciaDeViajes\CapaNegocio\obj\Debug\CapaNegocio.dll
 C:\Users\ZV-ANALISTAJUNIOR-1\Downloads\AgenciaDeViajes\AgenciaDeViajes\CapaNegocio\obj\Debug\CapaNegocio.pdb
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\CapaNegocio\bin\Debug\CapaNegocio.dll
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\CapaNegocio\bin\Debug\CapaNegocio.pdb
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\CapaNegocio\bin\Debug\CapaDatos.dll
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\CapaNegocio\bin\Debug\Entidades.dll
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\CapaNegocio\bin\Debug\CapaDatos.pdb
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\CapaNegocio\bin\Debug\Entidades.pdb
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\CapaNegocio\obj\Debug\Negocio.csproj.AssemblyReference.cache
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\CapaNegocio\obj\Debug\Negocio.csproj.CoreCompileInputs.cache
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\CapaNegocio\obj\Debug\Negocio.csproj.Up2Date
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\CapaNegocio\obj\Debug\CapaNegocio.dll
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\CapaNegocio\obj\Debug\CapaNegocio.pdb
