@@ -10,3 +10,9 @@ C:\Users\ZV-ANALISTAJUNIOR-1\Downloads\AgenciaDeViajes\AgenciaDeViajes\Entidades
 C:\Users\ZV-ANALISTAJUNIOR-1\Downloads\AgenciaDeViajes\AgenciaDeViajes\Entidades\obj\Debug\Entidades.csproj.CoreCompileInputs.cache
 C:\Users\ZV-ANALISTAJUNIOR-1\Downloads\AgenciaDeViajes\AgenciaDeViajes\Entidades\obj\Debug\Entidades.dll
 C:\Users\ZV-ANALISTAJUNIOR-1\Downloads\AgenciaDeViajes\AgenciaDeViajes\Entidades\obj\Debug\Entidades.pdb
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\Entidades\bin\Debug\Entidades.dll
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\Entidades\bin\Debug\Entidades.pdb
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\Entidades\obj\Debug\Entidades.csproj.AssemblyReference.cache
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\Entidades\obj\Debug\Entidades.csproj.CoreCompileInputs.cache
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\Entidades\obj\Debug\Entidades.dll
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\Entidades\obj\Debug\Entidades.pdb

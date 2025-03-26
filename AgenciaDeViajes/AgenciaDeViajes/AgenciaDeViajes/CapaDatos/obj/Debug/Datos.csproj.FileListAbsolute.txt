@@ -16,3 +16,12 @@ C:\Users\ZV-ANALISTAJUNIOR-1\Downloads\AgenciaDeViajes\AgenciaDeViajes\CapaDatos
 C:\Users\ZV-ANALISTAJUNIOR-1\Downloads\AgenciaDeViajes\AgenciaDeViajes\CapaDatos\obj\Debug\Datos.csproj.CopyComplete
 C:\Users\ZV-ANALISTAJUNIOR-1\Downloads\AgenciaDeViajes\AgenciaDeViajes\CapaDatos\obj\Debug\CapaDatos.dll
 C:\Users\ZV-ANALISTAJUNIOR-1\Downloads\AgenciaDeViajes\AgenciaDeViajes\CapaDatos\obj\Debug\CapaDatos.pdb
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\CapaDatos\bin\Debug\CapaDatos.dll
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\CapaDatos\bin\Debug\CapaDatos.pdb
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\CapaDatos\bin\Debug\Entidades.dll
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\CapaDatos\bin\Debug\Entidades.pdb
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\CapaDatos\obj\Debug\Datos.csproj.AssemblyReference.cache
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\CapaDatos\obj\Debug\Datos.csproj.CoreCompileInputs.cache
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\CapaDatos\obj\Debug\Datos.csproj.Up2Date
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\CapaDatos\obj\Debug\CapaDatos.dll
+C:\Users\vanne\Downloads\ProyectoGit-2\AgenciaDeViajes\AgenciaDeViajes\AgenciaDeViajes\CapaDatos\obj\Debug\CapaDatos.pdb

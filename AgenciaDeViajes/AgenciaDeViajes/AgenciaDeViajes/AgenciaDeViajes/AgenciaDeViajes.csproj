@@ -176,8 +176,10 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Registrar\Registar.cshtml" />
-    <Content Include="Views\Home\Registar.cshtml" />
+    <Content Include="Views\Home\Registrar.cshtml" />
     <Content Include="Views\Home\RecuperarContrasena.cshtml" />
+    <Content Include="Views\Home\CambiarContrasena.cshtml" />
+    <Content Include="Views\Home\Reservas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

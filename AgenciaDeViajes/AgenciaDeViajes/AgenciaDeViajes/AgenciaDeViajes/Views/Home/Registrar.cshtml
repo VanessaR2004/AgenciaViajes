@@ -1,0 +1,126 @@
+﻿@model  Entidades.UsuariosNuevos
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuario</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .alert-custom {
+            background: rgba(255, 0, 0, 0.8); /* Rojo translúcido */
+            color: white; /* Texto en blanco */
+            font-weight: bold;
+            border: 1px solid rgba(255, 0, 0, 0.9); /* Borde rojo más fuerte */
+            border-radius: 8px;
+            box-shadow: 0px 4px 15px rgba(255, 0, 0, 0.6); /* Sombra roja para efecto sobresalido */
+            padding: 15px;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1050; /* Asegura que esté sobre otros elementos */
+            width: auto;
+            max-width: 400px;
+            text-align: center;
+        }
+
+            .alert-custom .btn-close {
+                font-size: 12px; /* Reduce el tamaño del icono */
+                width: 18px; /* Ajusta el ancho */
+                height: 18px; /* Ajusta la altura */
+                padding: 3px; /* Reduce el espacio interno */
+                opacity: 0.8; /* Hace que no sea tan llamativo */
+            }
+        </style>
+</head>
+<body class="bg-light">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card mt-5 shadow-lg">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h3>Registro de Usuario</h3>
+                    </div>
+                    @if (!string.IsNullOrEmpty(ViewBag.Mensaje))
+                    {
+                        <div class="alert-custom alert @ViewBag.TipoMensaje alert-dismissible fade show" role="alert">
+                            <i class="bi @ViewBag.Icono"></i> @ViewBag.Mensaje
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+                    <div class="card-body">
+                        @using (Html.BeginForm("Registrar", "Home", FormMethod.Post))
+                        {
+                            <div class="mb-3">
+                                <label class="form-label">Tipo de Identificación:</label>
+                                @Html.DropDownListFor(m => m.TipoIdentificacion,
+                                    new SelectList(ViewBag.TiposIdentificacion, "IdenId", "Nombre"),
+                                    "Seleccione un tipo",
+                                    new { @class = "form-control", required = "required" })
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Número de Identificación:</label>
+                                @Html.TextBoxFor(m => m.Identifiacion, new { @class = "form-control", required = "required" })
+                            </div>
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.Direccion, new { @class = "form-label" })
+                                @Html.TextBoxFor(m => m.Direccion, new { @class = "form-control", required = "required" })
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Número de celular:</label>
+                                @Html.TextBoxFor(m => m.Celular, new { @class = "form-control", required = "required" })
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Nombre completo:</label>
+                                @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", required = "required" })
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Usuario:</label>
+                                @Html.TextBoxFor(m => m.UsuarioNuevo, new { @class = "form-control", required = "required" })
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Contraseña:</label>
+                                @Html.PasswordFor(m => m.PasswordNuevo, new { @class = "form-control", required = "required" })
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Correo Electronico</label>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", required = "required" })
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Registrarse</button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function validarFormulario() {
+            let campos = [
+                { id: "TipoIdentificacion", nombre: "Tipo de Identificación" },
+                { id: "Identifiacion", nombre: "Número de Identificación" },
+                { id: "Direccion", nombre: "Dirección" },
+                { id: "Celular", nombre: "Número de celular" },
+                { id: "Nombre", nombre: "Nombre completo" },
+                { id: "UsuarioNuevo", nombre: "Usuario" },
+                { id: "PasswordNuevo", nombre: "Contraseña" },
+                { id: "Email", nombre: "Correo Electrónico" }
+            ];
+
+            for (let campo of campos) {
+                let valor = document.getElementById(campo.id).value.trim();
+                if (valor === "") {
+                    alert("El campo '" + campo.nombre + "' no puede estar vacío.");
+                    document.getElementById(campo.id).focus();
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>
