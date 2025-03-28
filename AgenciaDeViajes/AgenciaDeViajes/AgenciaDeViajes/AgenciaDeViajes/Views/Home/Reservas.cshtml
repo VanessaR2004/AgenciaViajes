@@ -73,7 +73,7 @@
 
                     <div class="mb-3">
                         <label for="tipoViaje" class="form-label">Tipo de Viaje</label>
-                        @Html.DropDownListFor(m => m.Clase,
+                        @Html.DropDownListFor(m => m.TipoViaje,
                          new SelectList(ViewBag.TipoViaje, "Via_id", "Via_nombre"),
                          "Seleccione un tipo",
                          new { @class = "form-control", required = "required" })
@@ -91,8 +91,8 @@
 
                     <div class="mb-3">
                         <label for="clase" class="form-label">Clase de Vuelo</label>
-                        @Html.DropDownListFor(m => m.Clase,
-                        new SelectList(ViewBag.Destino, "CLas_Id", "Nombre"),
+                        @Html.DropDownListFor(m => m.Destino,
+                        new SelectList(ViewBag.Destino, "Des_id", "Des_nombre"),
                         "Seleccione un tipo",
                         new { @class = "form-control", required = "required" })
                     </div>

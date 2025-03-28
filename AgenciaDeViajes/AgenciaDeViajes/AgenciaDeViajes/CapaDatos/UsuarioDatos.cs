@@ -306,7 +306,7 @@ namespace Datos
                 try
                 {
                     con.Open();
-                    string query = "SELECT Via_id, Via_nombre FROM Dsetinos";
+                    string query = "SELECT Des_id, Des_nombre FROM Destinos";
 
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     using (SqlDataReader reader = cmd.ExecuteReader())
