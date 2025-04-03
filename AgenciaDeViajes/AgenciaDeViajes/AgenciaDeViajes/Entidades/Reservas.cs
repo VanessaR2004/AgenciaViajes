@@ -8,10 +8,13 @@ namespace Entidades
 {
     public class ReservasNuevas
     {
-        public DateTime FechaVueloIda { get; set; }
-        public DateTime FechaVueloVuelta { get; set; }
+        public string FechaVueloIda { get; set; }
+        public string FechaVueloVuelta { get; set; }
         public string Horario { get; set; }
+
         public int Clase { get; set; }
+        public int TipoViaje { get; set; }
+        public int Destino { get; set; }
         public int ReservaConfirmada { get; set; }
     }
 

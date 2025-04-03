@@ -181,5 +181,35 @@ namespace Negocio
 
             return lista1;
         }
+        public List<OpcionUsuario> OpcionesAdmin(string strconexion)
+        {
+            string str_cod_error = string.Empty;
+            string str_error_mensaje = string.Empty;
+            List<OpcionUsuario> lista1 = usuarioDatos.OpcionesAdmin(strconexion, "1", ref str_cod_error, ref str_error_mensaje);
+
+
+            return lista1;
+        }
+        public bool  EsAdmin(string strconexion, string login)
+        {
+            string str_cod_error = string.Empty;
+            string str_error_mensaje = string.Empty;
+            bool admin = usuarioDatos.EsAdmin(strconexion, login , ref str_cod_error, ref str_error_mensaje);
+
+
+            return admin;
+        }
+        public int crearReserva(string strconexion, ReservasNuevas reservasNuevas,string login)
+        {
+            string str_cod_error = string.Empty;
+            string str_error_mensaje = string.Empty;
+            int reserva = usuarioDatos.RegistrarReserva(strconexion, reservasNuevas, login, ref str_cod_error, ref str_error_mensaje);
+
+
+            return reserva;
+        }
+        
+
+
     }
 }

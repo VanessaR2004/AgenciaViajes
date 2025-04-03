@@ -5,162 +5,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reservar Vuelo</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-ui-dist/jquery-ui.min.css">
+    <title> Búsqueda de Vuelos</title>
     <style>
         body {
-            background-image: url('https://source.unsplash.com/1600x900/?travel,airplane');
-            background-size: cover;
-            background-position: center;
-            font-family: Arial, sans-serif;
+            
+            font-family: 'Arial', sans-serif;
         }
 
-        .container {
-            max-width: 450px;
-            margin-top: 50px;
-        }
-
-        .card {
+        .custom-card {
+            background: #4B0082;
             border-radius: 15px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
+            backdrop-filter: blur(10px);
         }
 
-        .card-header {
-            background: linear-gradient(135deg, #007bff, #0056b3);
-            color: white;
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            padding: 15px;
-        }
-
-        .form-control, .form-select {
-            border-radius: 8px;
-        }
-
-        .btn {
-            border-radius: 8px;
-            font-weight: bold;
-        }
-
-        .btn-primary {
-            background: #007bff;
+        .btn-success {
+            background-color: #28a745;
             border: none;
         }
+
+            .btn-success:hover {
+                background-color: #218838;
+            }
 
         .btn-danger {
-            background: #dc3545;
+            background-color: #dc3545;
             border: none;
         }
 
-            .btn-primary:hover, .btn-danger:hover {
-                opacity: 0.85;
+            .btn-danger:hover {
+                background-color: #c82333;
             }
+
+        label {
+            font-weight: bold;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: white;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+            .navbar a {
+                text-decoration: none;
+                color: black;
+                font-weight: bold;
+                padding: 10px;
+            }
+
+                .navbar a:hover {
+                    color: #6a0dad;
+                }
     </style>
-</head>
-<body>
-
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                ✈️ Reserva tu Vuelo
-            </div>
-            <div class="card-body">
-                @using (Html.BeginForm("ReservarVuelo", "Home", FormMethod.Post))
-                {
-
-                    <div class="mb-3">
-                        <label for="tipoViaje" class="form-label">Tipo de Viaje</label>
-                        @Html.DropDownListFor(m => m.TipoViaje,
-                         new SelectList(ViewBag.TipoViaje, "Via_id", "Via_nombre"),
-                         "Seleccione un tipo",
-                         new { @class = "form-control", required = "required" })
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="fechaVuelo" class="form-label">Fecha de Ida</label>
-                        @Html.TextBoxFor(m => m.FechaVueloIda, new { @class = "form-control", id = "fechaVuelo", required = "required", placeholder = "Seleccione una fecha" })
-                    </div>
-
-                    <div class="mb-3" id="fechaRegresoDiv" style="display: none;">
-                        <label for="fechaRegreso" class="form-label">Fecha de Regreso</label>
-                        @Html.TextBoxFor(m => m.FechaVueloVuelta, new { @class = "form-control", id = "fechaVuelo", required = "required", placeholder = "Seleccione una fecha" })
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="clase" class="form-label">Clase de Vuelo</label>
-                        @Html.DropDownListFor(m => m.Destino,
-                        new SelectList(ViewBag.Destino, "Des_id", "Des_nombre"),
-                        "Seleccione un tipo",
-                        new { @class = "form-control", required = "required" })
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="horario" class="form-label">Horario Disponible</label>
-                        @Html.DropDownListFor(m => m.Horario, new SelectList(new[]
-                        {
-                            "06:00 AM", "09:00 AM", "12:00 PM", "03:00 PM", "06:00 PM", "09:00 PM"
-                        }), "Seleccione un horario", new { @class = "form-select", required = "required" })
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="clase" class="form-label">Clase de Vuelo</label>
-                        @Html.DropDownListFor(m => m.Clase,
-                        new SelectList(ViewBag.Clases, "CLas_Id", "Nombre"),
-                        "Seleccione un tipo",
-                        new { @class = "form-control", required = "required" })
-                    </div>
-                    @Html.Hidden("confirmacion", "1")
-                    <button type="submit" class="btn btn-primary w-100">Reservar</button>
-                }
-                @if (TempData["MensajeExito"] != null)
-                {
-                    <div class="alert alert-success text-center mt-3">@TempData["MensajeExito"]</div>
-                }
-
-                <button id="cancelarReserva" class="btn btn-danger w-100 mt-3">Cancelar Reserva</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-ui-dist/jquery-ui.min.js"></script>
     <script>
-        $(document).ready(function () {
-            // Inicialización de datepicker
-            $("#fechaVuelo, #fechaRegreso").datepicker({
-                dateFormat: "yy-mm-dd",
-                minDate: 0
-            });
+    document.addEventListener("DOMContentLoaded", function () {
+        let tipoViaje = document.getElementById("@Html.IdFor(m => m.TipoViaje)");
+        let fechaVueloIda = document.getElementById("@Html.IdFor(m => m.FechaVueloIda)");
+        let fechaVueloVuelta = document.getElementById("@Html.IdFor(m => m.FechaVueloVuelta)");
+        let fechaRegresoDiv = document.getElementById("fechaRegresoDiv");
 
-            $("#tipoViaje").change(function () {
-                let tipoViaje = $(this).val();
-                if (tipoViaje === "ida_vuelta") {
-                    $("#fechaRegresoDiv").slideDown();
-                    $("#fechaRegreso").prop("required", true);
+        let mensajeErrorIda = document.createElement("small");
+        mensajeErrorIda.style.color = "red";
+        fechaVueloIda.parentNode.appendChild(mensajeErrorIda);
 
-                    $("#fechaVuelo").datepicker("option", "onSelect", function (selectedDate) {
-                        let minRegreso = new Date(selectedDate);
-                        minRegreso.setDate(minRegreso.getDate() + 1);
-                        $("#fechaRegreso").datepicker("option", "minDate", minRegreso);
-                    });
+        let mensajeErrorVuelta = document.createElement("small");
+        mensajeErrorVuelta.style.color = "red";
+        fechaVueloVuelta.parentNode.appendChild(mensajeErrorVuelta);
 
-                } else {
-                    $("#fechaRegresoDiv").slideUp();
-                    $("#fechaRegreso").val("").prop("required", false);
-                    $("#fechaVuelo").datepicker("option", "onSelect", null);
-                }
-            });
-
-            $("#cancelarReserva").click(function () {
-                if (confirm("¿Estás seguro de cancelar la reserva? Esto puede estar sujeto a cargos según la política de la agencia.")) {
-                    alert("Reserva cancelada con éxito.");
-                }
-            });
+        // Mostrar u ocultar fecha de regreso según el tipo de viaje
+        tipoViaje.addEventListener("change", function () {
+            if (this.value==2) {
+                fechaRegresoDiv.style.display = "block";
+            } else {
+                fechaRegresoDiv.style.display = "none";
+                fechaVueloVuelta.value = ""; // Limpiar el campo si no es ida y vuelta
+                mensajeErrorVuelta.textContent = "";
+            }
         });
+
+        // Validar fecha de ida
+        fechaVueloIda.addEventListener("change", function () {
+            let fechaIda = new Date(this.value);
+            let hoy = new Date();
+            hoy.setHours(0, 0, 0, 0);
+
+            if (fechaIda < hoy) {
+                mensajeErrorIda.textContent = "La fecha de ida no puede ser en el pasado.";
+                this.value = ""; // Limpiar el campo
+            } else {
+                mensajeErrorIda.textContent = "";
+            }
+        });
+
+        // Validar fecha de vuelta
+        fechaVueloVuelta.addEventListener("change", function () {
+            let fechaIda = new Date(fechaVueloIda.value);
+            let fechaVuelta = new Date(this.value);
+
+            if (fechaVueloIda.value === "") {
+                mensajeErrorVuelta.textContent = "Seleccione primero la fecha de ida.";
+                this.value = "";
+                return;
+            }
+
+            if (fechaVuelta < fechaIda) {
+                mensajeErrorVuelta.textContent = "La fecha de vuelta no puede ser antes de la fecha de ida.";
+                this.value = ""; // Limpiar el campo
+            } else {
+                mensajeErrorVuelta.textContent = "";
+            }
+        });
+    });
+
+      
+ 
     </script>
 
+</head>
+<body>
+    <div class="navbar">
+        <a href="#">Reservas Anteriores</a>
+        <a href="#">Reservas Nuevas </a>
+    </div>
+
+    <div class="search-section">
+        <div class="search-box">
+            @using (Html.BeginForm("Reservas", "Home", FormMethod.Post, new { @class = "container mt-5" }))
+            {
+                <div class="card p-4 shadow-lg custom-card">
+                    <h2 class="text-center mb-4 text-white">Reservar Vuelo</h2>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="tipoViaje" class="form-label text-white">Tipo de Viaje</label>
+                            @Html.DropDownListFor(m => m.TipoViaje,
+                            new SelectList(ViewBag.TipoViaje, "Via_id", "Via_nombre"),
+                            "Seleccione un tipo",
+                            new { @class = "form-select", required = "required" })
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="fechaVuelo" class="form-label text-white">Fecha de Ida</label>
+                            @Html.TextBoxFor(m => m.FechaVueloIda, new { @class = "form-control", type = "date", required = "required" })
+                        </div>
+
+                        <div class="col-md-6" id="fechaRegresoDiv" style="display: none;">
+                            <label for="fechaRegreso" class="form-label text-white">Fecha de Regreso</label>
+                            @Html.TextBoxFor(m => m.FechaVueloVuelta, new { @class = "form-control", type = "date" })
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="destino" class="form-label text-white">Destino</label>
+                            @Html.DropDownListFor(m => m.Destino,
+                            new SelectList(ViewBag.Destino, "Des_id", "Des_nombre"),
+                            "Seleccione un destino",
+                            new { @class = "form-select", required = "required" })
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="horario" class="form-label text-white">Horario Disponible</label>
+                            @Html.DropDownListFor(m => m.Horario, new SelectList(new[]
+                            {
+                                "06:00 AM", "09:00 AM", "12:00 PM", "03:00 PM", "06:00 PM", "09:00 PM"
+                            }), "Seleccione un horario", new { @class = "form-select", required = "required" })
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="Clase" class="form-label text-white">Clase de Vuelo</label>
+                            @Html.DropDownListFor(m => m.Clase,
+                            new SelectList(ViewBag.Clases, "CLas_Id", "Nombre"),
+                            "Seleccione una clase",
+                            new { @class = "form-select", required = "required" })
+                        </div>
+                    </div>
+
+
+                    @Html.HiddenFor(m => m.ReservaConfirmada)
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" name="accion" value="reservar" class="btn btn-success">Reservar</button>
+                        <button type="submit" name="accion" value="cancelar" class="btn btn-danger">Cancelar Reserva</button>
+                    </div>
+
+
+                    @if (TempData["MensajeExito"] != null)
+                    {
+                        <div class="alert alert-success text-center mt-3">@TempData["MensajeExito"]</div>
+                    }
+                </div>
+            }
+
+
+           
+        </div>
+    </div>
 </body>
+<script>
+    document.getElementById("btnReservar").addEventListener("click", function () {
+        document.getElementById("ReservaConfirmada").value = "1";
+    });
+
+    document.getElementById("btnCancelar").addEventListener("click", function () {
+        document.getElementById("ReservaConfirmada").value = "0";
+    });
+</script>
 </html>
+

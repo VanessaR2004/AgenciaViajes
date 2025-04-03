@@ -22,6 +22,7 @@ namespace Entidades
 
         public string PasswordNuevo { get; set; }
         public string Email { get; set; }
+        public string Admin { get; set; }
     }
     public class TiposIdentificacion
     {
@@ -47,6 +48,13 @@ namespace Entidades
         public int  UsuarioId { get; set; }
         public DateTime FechaIngreso { get; set; } = DateTime.Now;
         public string Navegador { get; set; }
+    }
+    public class OpcionUsuario
+    {
+        public int Id { get; set; }
+        public int UsuarioId { get; set; }
+        public string NombreOpcion { get; set; }
+        public bool Activa { get; set; }
     }
 
 }

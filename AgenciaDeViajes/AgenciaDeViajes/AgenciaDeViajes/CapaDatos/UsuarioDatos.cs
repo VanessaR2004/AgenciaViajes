@@ -24,8 +24,8 @@ namespace Datos
                 {
                     cmd = new SqlCommand("Sp_Consulta_Usuarios", con);
                     cmd.Parameters.Add("@buscar", SqlDbType.Int).Value = opcion;
-                    cmd.Parameters.Add("@login", SqlDbType.VarChar,100).Value = usuario.Usuario;
-                    cmd.Parameters.Add("@password", SqlDbType.VarChar,100).Value = usuario.Password;
+                    cmd.Parameters.Add("@login", SqlDbType.VarChar, 100).Value = usuario.Usuario;
+                    cmd.Parameters.Add("@password", SqlDbType.VarChar, 100).Value = usuario.Password;
 
                     cmd.CommandType = CommandType.StoredProcedure;
                     da.SelectCommand = cmd;
@@ -50,7 +50,7 @@ namespace Datos
 
 
         }
-        public int RegistroLogin(RegistroIngreso registrousuario,  string strconexion,
+        public int RegistroLogin(RegistroIngreso registrousuario, string strconexion,
             ref string str_cod_error, ref string str_error_mensaje)
         {
             int estado = 0;
@@ -62,10 +62,10 @@ namespace Datos
                 try
                 {
                     cmd = new SqlCommand("Sp_Registro_Ingreso", con);
-                   
-                   cmd.Parameters.Add("@usu_id", SqlDbType.VarChar, 100).Value = registrousuario.UsuarioId;
-                   cmd.Parameters.Add("@FechaIngreso", SqlDbType.DateTime).Value = registrousuario.FechaIngreso;
-                   cmd.Parameters.Add("@Navegador", SqlDbType.VarChar, 100).Value = registrousuario.Navegador;
+
+                    cmd.Parameters.Add("@usu_id", SqlDbType.VarChar, 100).Value = registrousuario.UsuarioId;
+                    cmd.Parameters.Add("@FechaIngreso", SqlDbType.DateTime).Value = registrousuario.FechaIngreso;
+                    cmd.Parameters.Add("@Navegador", SqlDbType.VarChar, 100).Value = registrousuario.Navegador;
                     //cmd.Parameters.Add("@password", SqlDbType.VarChar, 100).Value = usuario.Password;
 
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -147,6 +147,7 @@ namespace Datos
                     cmd.Parameters.Add("@login", SqlDbType.VarChar, 100).Value = usuariosN.UsuarioNuevo;
                     cmd.Parameters.Add("@contraseña", SqlDbType.VarChar, 100).Value = usuariosN.PasswordNuevo;
                     cmd.Parameters.Add("@Correo", SqlDbType.VarChar, 100).Value = usuariosN.Email;
+                    cmd.Parameters.Add("@administrador", SqlDbType.VarChar, 100).Value = usuariosN.Admin;
 
 
 
@@ -265,7 +266,7 @@ namespace Datos
             }
         }
         public List<TipoViaje> ListaTipoVuelos(string strconexion,
- ref string str_cod_error, ref string str_error_mensaje)
+             ref string str_cod_error, ref string str_error_mensaje)
         {
             List<TipoViaje> lista = new List<TipoViaje>();
             using (SqlConnection con = new SqlConnection(strconexion))
@@ -298,7 +299,7 @@ namespace Datos
             }
         }
         public List<Destino> ListaDestinoVuelos(string strconexion,
- ref string str_cod_error, ref string str_error_mensaje)
+            ref string str_cod_error, ref string str_error_mensaje)
         {
             List<Destino> lista = new List<Destino>();
             using (SqlConnection con = new SqlConnection(strconexion))
@@ -329,6 +330,125 @@ namespace Datos
                     return null;
                 }
             }
+        }
+
+        public List<OpcionUsuario> OpcionesAdmin(string strconexion, string admin , ref string str_cod_error, ref string str_error_mensaje)
+        {
+            List<OpcionUsuario> opciones = new List<OpcionUsuario>();
+
+            using (SqlConnection conn = new SqlConnection(strconexion))
+            {
+                string query = "SELECT usuOp_id, usuOp_nombre, usuOp_Activa" +
+                    "FROM OpcionesUsuario op" +
+                    "  WHERE usu_id = @admin AND usuOp_Activa = 1";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@admin", admin);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    opciones.Add(new OpcionUsuario
+                    {
+                        Id = (int)reader["Id"],
+                        UsuarioId = (int)reader["UsuarioId"],
+                        NombreOpcion = reader["NombreOpcion"].ToString(),
+                        Activa = (bool)reader["Activa"]
+                    });
+                }
+            }
+
+            return opciones;
+        }
+        public bool EsAdmin(string strconexion, string login, ref string str_cod_error, ref string str_error_mensaje)
+        {
+          
+            using (SqlConnection conn = new SqlConnection(strconexion))
+            {
+                string query = "SELECT  EsAdministrador  FROM usuarios   WHERE usu_login = @login ";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@login", login);
+                conn.Open();
+                object result = cmd.ExecuteScalar();
+                conn.Close();
+               
+                return result != null && Convert.ToBoolean(result);
+             
+
+
+            }
+
+            
+        }
+        
+        public int RegistrarReserva(string strconexion, ReservasNuevas reservasNuevas,string login, ref string str_cod_error, ref string str_error_mensaje)
+        {
+
+            using (SqlConnection con = new SqlConnection(strconexion))
+            {
+                SqlCommand cmd = new SqlCommand();
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataTable dt = new DataTable();
+                int cod_error = 0;
+                try
+                {
+                    cmd = new SqlCommand("Sp_Insert_Reservas", con);
+                    cmd.Parameters.Add("@Rev_FechaVueloIda", SqlDbType.VarChar,100).Value = reservasNuevas.FechaVueloIda;
+                    cmd.Parameters.Add("@Rev_FechaVueloVuelta", SqlDbType.VarChar,100).Value = reservasNuevas.FechaVueloVuelta;
+                    cmd.Parameters.Add("@Rev_Horario", SqlDbType.VarChar, 100).Value = reservasNuevas.Horario;
+                    cmd.Parameters.Add("@CLas_Id", SqlDbType.Int).Value = reservasNuevas.Clase;
+                    cmd.Parameters.Add("@usu_login", SqlDbType.VarChar, 50).Value = login;
+                    cmd.Parameters.Add("@Via_id", SqlDbType.Int).Value = reservasNuevas.TipoViaje;
+                    cmd.Parameters.Add("@Des_id", SqlDbType.Int).Value = reservasNuevas.Destino;
+                    cmd.Parameters.Add("@ReservaConfirmada", SqlDbType.Int).Value = reservasNuevas.ReservaConfirmada;
+                   
+
+
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    da.SelectCommand = cmd;
+                    da.Fill(dt);
+                    if (dt.Rows.Count > 0 && dt.Columns.Contains("ErrorMensaje"))
+                    {
+                        str_error_mensaje = dt.Rows[0]["ErrorMensaje"].ToString();
+
+                        // Verificar si el mensaje indica un campo duplicado
+                        if (str_error_mensaje.Contains("duplicate"))
+                        {
+                            str_cod_error = "DUPLICATE_ENTRY";
+                            cod_error = -1;
+                            return cod_error; // Código específico para duplicados
+                        }
+
+                    }
+                    else
+                    {
+                        cod_error = 1;
+
+                    }
+                    return cod_error;
+                    //return 1;
+
+
+
+                }
+                catch (Exception ex)
+                {
+                    str_cod_error = "PrE12";
+                    str_cod_error = "Error: " + ex.Message;
+                    return 0;
+                }
+                finally
+                {
+                    cmd.Dispose();
+                }
+
+
+
+                //return count > 0;
+            }
+
+
         }
     }
 }

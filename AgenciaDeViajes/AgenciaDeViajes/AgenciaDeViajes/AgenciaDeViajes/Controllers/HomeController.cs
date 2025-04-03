@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using Entidades;
@@ -43,6 +45,7 @@ namespace AgenciaDeViajes.Controllers
                 }
                 else 
                 {
+                    Session["UsuarioLogin"] = jsonusuariosexistentes.Usuario;
                     DataTable loginValido = usuarioNegocio.ValidarLogin(jsonusuariosexistentes, strconexion);
                     if (loginValido.Rows.Count > 0)
                     {
@@ -57,7 +60,18 @@ namespace AgenciaDeViajes.Controllers
 
                         };
                         int registroingreso = usuarioNegocio.RegistroIngreso(registroIngreso, strconexion);
-                        return RedirectToAction("Reservas", "Home"); // Cambia "Reservas" por la vista correcta
+                        bool EsAdmin = usuarioNegocio.EsAdmin( strconexion, jsonusuariosexistentes.Usuario);
+
+                        if (EsAdmin)
+                        {
+                            return RedirectToAction("Reservas", "Home");
+                        }
+                        else 
+                        {
+                            return RedirectToAction("Reservas", "Home");
+                        }
+
+                           // return RedirectToAction("Reservas", "Home"); // Cambia "Reservas" por la vista correcta
                     }
                     else
                     {
@@ -175,6 +189,8 @@ namespace AgenciaDeViajes.Controllers
                 return View();
         }
 
+        
+
         [HttpGet]
         public ActionResult Reservas()
         {
@@ -188,7 +204,7 @@ namespace AgenciaDeViajes.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Reservas(ReservasNuevas reservasNuevas,int confirmacion)
+        public ActionResult Reservas(ReservasNuevas reservasNuevas, string accion)//int confirmacion)
         {
             List<TiposClases> tiposClases = usuarioNegocio.TipoClaseslist(strconexion);
             ViewBag.Clases = tiposClases;
@@ -196,18 +212,30 @@ namespace AgenciaDeViajes.Controllers
             ViewBag.TipoViaje = tiposViaje;
             List<Destino> destino = usuarioNegocio.Destino(strconexion);
             ViewBag.Destino = destino;
-            if (confirmacion == 1)
+            string usuarioLogin = Session["UsuarioLogin"] as string;
+            if (accion == "reservar")
             {
+                reservasNuevas.ReservaConfirmada = 1; // Confirmar reserva
+            }
+            else if (accion == "cancelar")
+            {
+                reservasNuevas.ReservaConfirmada = 0; // Cancelar reserva
+            }
+            if (reservasNuevas.ReservaConfirmada == 1)
+            {
+               
+
+                int guardarreseva = usuarioNegocio.crearReserva(strconexion, reservasNuevas, usuarioLogin);
 
             }
-            else 
+            else
             {
                 TempData["MensajeExito"] = "La reserva se ha cancelado exitosamente";
                 return RedirectToAction("Login");
             }
 
 
-                return View();
+            return View();
         }
 
     }
