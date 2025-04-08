@@ -6,9 +6,11 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using System.Web.DynamicData;
 using System.Web.Mvc;
 using Entidades;
 using Negocio;
+using Newtonsoft.Json;
 
 namespace AgenciaDeViajes.Controllers
 {
@@ -43,35 +45,35 @@ namespace AgenciaDeViajes.Controllers
                     Session["UsuarioLogin"] = jsonusuariosexistentes.Usuario;
                     return RedirectToAction("CambiarContrasena", "Home");
                 }
-                else 
+                else
                 {
                     Session["UsuarioLogin"] = jsonusuariosexistentes.Usuario;
                     DataTable loginValido = usuarioNegocio.ValidarLogin(jsonusuariosexistentes, strconexion);
                     if (loginValido.Rows.Count > 0)
                     {
-                        int UsuarioId = Convert.ToInt32( loginValido.Rows[0]["usu_id"]);
+                        int UsuarioId = Convert.ToInt32(loginValido.Rows[0]["usu_id"]);
                         // Si el login es exitoso, redirigir a otra vista
                         RegistroIngreso registroIngreso = new RegistroIngreso
                         {
                             UsuarioId = UsuarioId,
                             FechaIngreso = DateTime.Now,
-                           // IP = HttpContext.Connection.RemoteIpAddress?.ToString(),
+                            // IP = HttpContext.Connection.RemoteIpAddress?.ToString(),
                             Navegador = Request.Headers["User-Agent"].ToString()
 
                         };
                         int registroingreso = usuarioNegocio.RegistroIngreso(registroIngreso, strconexion);
-                        bool EsAdmin = usuarioNegocio.EsAdmin( strconexion, jsonusuariosexistentes.Usuario);
+                        bool EsAdmin = usuarioNegocio.EsAdmin(strconexion, jsonusuariosexistentes.Usuario);
 
                         if (EsAdmin)
                         {
-                            return RedirectToAction("Reservas", "Home");
+                            return RedirectToAction("ReservasAdministradr", "Home");
                         }
-                        else 
+                        else
                         {
                             return RedirectToAction("Reservas", "Home");
                         }
 
-                           // return RedirectToAction("Reservas", "Home"); // Cambia "Reservas" por la vista correcta
+                        // return RedirectToAction("Reservas", "Home"); // Cambia "Reservas" por la vista correcta
                     }
                     else
                     {
@@ -79,7 +81,7 @@ namespace AgenciaDeViajes.Controllers
                         return View(); // Asegura que retorne la vista en caso de error
                     }
                 }
-                
+
             }
             else if (bandera == "recuperar")
             {
@@ -135,7 +137,7 @@ namespace AgenciaDeViajes.Controllers
         }
         [HttpPost]
 
-        public ActionResult RecuperarContrasena (RecuperarContrasena recuperar)
+        public ActionResult RecuperarContrasena(RecuperarContrasena recuperar)
         {
             string strconexion = ConfigurationManager.ConnectionStrings["Conexionbd"].ConnectionString;
             int email = usuarioNegocio.Emailbienescrito(recuperar.Email);
@@ -144,14 +146,14 @@ namespace AgenciaDeViajes.Controllers
                 ViewBag.Mensaje = "El correo ingresado es incorrecto, vuelva a intentar";
                 return View(recuperar);
             }
-            else 
+            else
             {
                 bool recuperarcontrasena = usuarioNegocio.RecuperarContrasena(recuperar, strconexion);
                 if (recuperarcontrasena)
                 {
                     TempData["MensajeExito"] = "Se ha enviado una nueva contraseña a tu correo.";
                     return RedirectToAction("Login");
- 
+
                 }
                 else
                 {
@@ -167,7 +169,7 @@ namespace AgenciaDeViajes.Controllers
             string usuario = Session["UsuarioLogin"].ToString(); // Obtener ID del usuario
 
             // Pasar el ID a la vista
-            ViewBag.UsuarioLogin= usuario;
+            ViewBag.UsuarioLogin = usuario;
 
             return View();
         }
@@ -182,14 +184,14 @@ namespace AgenciaDeViajes.Controllers
                 TempData["MensajeExito"] = "Se ha cambiado la clave exitosamente.";
                 return RedirectToAction("Login");
             }
-            else 
+            else
             {
                 ViewBag.Mensaje = "Las contraseñas no son iguales, valide y vuelva a intentar ";
             }
-                return View();
+            return View();
         }
 
-        
+
 
         [HttpGet]
         public ActionResult Reservas()
@@ -213,19 +215,41 @@ namespace AgenciaDeViajes.Controllers
             List<Destino> destino = usuarioNegocio.Destino(strconexion);
             ViewBag.Destino = destino;
             string usuarioLogin = Session["UsuarioLogin"] as string;
+            decimal valorClase = 0;
+
+
+            switch (reservasNuevas.Clase)
+            {
+                case 1: // Económica
+                    valorClase = 100000;
+                    break;
+                case 2: // Ejecutiva
+                    valorClase = 170000;
+                    break;
+                case 3: // Primera clase
+                    valorClase = 300000;
+                    break;
+            }
+
+            decimal valorBase = reservasNuevas.TipoViaje == 1 ? 150000 : 250000;
+            reservasNuevas.ValorTotalPagar = valorBase + valorClase;
+
             if (accion == "reservar")
             {
                 reservasNuevas.ReservaConfirmada = 1; // Confirmar reserva
             }
             else if (accion == "cancelar")
             {
+
                 reservasNuevas.ReservaConfirmada = 0; // Cancelar reserva
             }
             if (reservasNuevas.ReservaConfirmada == 1)
             {
-               
 
                 int guardarreseva = usuarioNegocio.crearReserva(strconexion, reservasNuevas, usuarioLogin);
+                TempData["ResumenReserva"] = JsonConvert.SerializeObject(reservasNuevas);
+                return RedirectToAction("ResumenCompra");
+
 
             }
             else
@@ -234,8 +258,48 @@ namespace AgenciaDeViajes.Controllers
                 return RedirectToAction("Login");
             }
 
+        }
+        [HttpGet]
+        public ActionResult ResumenCompra()
+        {
+            string usuarioLogin = Session["UsuarioLogin"] as string;
+            DataTable informacionReserva = usuarioNegocio.InformacionReserva(strconexion, usuarioLogin);
+            var reservas = new List<ResumenCompra>();
+            foreach (DataRow row in informacionReserva.Rows)
+            {
+                reservas.Add(new ResumenCompra
+                {
 
-            return View();
+                    FechaIda = row["Rev_FechaVueloIda"].ToString(),
+                    FechaVuelta = row["Rev_FechaVueloVuelta"].ToString(),
+                    TipoViaje = row["Nombre"].ToString(),
+                    Hora = row["Rev_Horario"].ToString(),
+                    Destino = row["Des_Nombre"].ToString(),
+                    ValorTotalPagar = row["ValorTotalPagar"].ToString()
+                });
+            }
+            return View(reservas);
+        }
+        public ActionResult ReservasAdministradr()
+        {
+            string usuarioLogin = Session["UsuarioLogin"] as string;
+            DataTable informacionReservaAdmin = usuarioNegocio.InformacionReservaAdmin(strconexion);
+            var reservas = new List<ResumenCompra>();
+            foreach (DataRow row in informacionReservaAdmin.Rows)
+            {
+                reservas.Add(new ResumenCompra
+                {
+                    Id_Reserva = Convert.ToInt32( row["Rev_Id"]),
+                    FechaIda = row["Rev_FechaVueloIda"].ToString(),
+                    FechaVuelta = row["Rev_FechaVueloVuelta"].ToString(),
+                    TipoViaje = row["Nombre"].ToString(),
+                    Hora = row["Rev_Horario"].ToString(),
+                    Destino = row["Des_Nombre"].ToString(),
+                    NombreUsuario = row["usu_nombre"].ToString(),
+                    ValorTotalPagar = row["ValorTotalPagar"].ToString()
+                });
+            }
+            return View(reservas);
         }
 
     }

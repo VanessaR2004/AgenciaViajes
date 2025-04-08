@@ -209,6 +209,26 @@ namespace Negocio
             return reserva;
         }
         
+        public DataTable InformacionReserva(string strconexion, string login)
+        {
+            string str_cod_error = string.Empty;
+            string str_error_mensaje = string.Empty;
+            DataTable reserva = usuarioDatos.InformacionReserva(strconexion,  login, ref str_cod_error, ref str_error_mensaje);
+
+
+            return reserva;
+        }
+        public DataTable InformacionReservaAdmin(string strconexion)
+        {
+            string str_cod_error = string.Empty;
+            string str_error_mensaje = string.Empty;
+            DataTable reserva = usuarioDatos.InformacionReservaAdmin(strconexion, ref str_cod_error, ref str_error_mensaje);
+
+
+            return reserva;
+        }
+        
+
 
 
     }

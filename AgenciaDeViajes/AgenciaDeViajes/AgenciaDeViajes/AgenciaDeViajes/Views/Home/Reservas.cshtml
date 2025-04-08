@@ -41,23 +41,28 @@
             font-weight: bold;
         }
         .navbar {
+            background-color: #333;
             display: flex;
-            justify-content: space-around;
-            align-items: center;
-            background: white;
-            padding: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            justify-content: center; /* Centra los elementos horizontalmente */
+            align-items: center; /* Centra verticalmente */
+            padding: 10px 0;
         }
 
             .navbar a {
+                color: white;
+                padding: 14px 20px;
                 text-decoration: none;
-                color: black;
-                font-weight: bold;
-                padding: 10px;
+                display: inline-block;
+                text-align: center; /* Centra el texto dentro de cada enlace */
+                font-size: 18px; /* Ajusta el tamaño de la fuente */
+                margin: 0 10px; /* Espaciado entre enlaces */
             }
 
-                .navbar a:hover {
-                    color: #6a0dad;
+                .navbar a.active {
+                    background-color: #d3d3d3; /* Gris claro */
+                    color: black;
+                    font-weight: bold;
+                    border-radius: 5px; /* Bordes redondeados */
                 }
     </style>
     <script>
@@ -127,8 +132,8 @@
 </head>
 <body>
     <div class="navbar">
-        <a href="#">Reservas Anteriores</a>
-        <a href="#">Reservas Nuevas </a>
+        <a href="@Url.Action("ResumenCompra", "Home")">Reservas Anteriores</a>
+        <a href="@Url.Action("Reservas", "Home")" class="active">Reservas Nuevas</a>
     </div>
 
     <div class="search-section">

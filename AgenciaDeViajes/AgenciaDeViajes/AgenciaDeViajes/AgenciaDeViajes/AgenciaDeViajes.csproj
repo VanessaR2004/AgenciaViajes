@@ -180,6 +180,9 @@
     <Content Include="Views\Home\RecuperarContrasena.cshtml" />
     <Content Include="Views\Home\CambiarContrasena.cshtml" />
     <Content Include="Views\Home\Reservas.cshtml" />
+    <Content Include="Views\Home\Inicio.cshtml" />
+    <Content Include="Views\Home\ResumenCompra.cshtml" />
+    <Content Include="Views\Home\ReservasAdministradr.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

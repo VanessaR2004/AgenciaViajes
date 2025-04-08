@@ -16,6 +16,7 @@ namespace Entidades
         public int TipoViaje { get; set; }
         public int Destino { get; set; }
         public int ReservaConfirmada { get; set; }
+        public decimal ValorTotalPagar { get; set; }
     }
 
     public class TiposClases
@@ -32,5 +33,18 @@ namespace Entidades
     {
         public int Des_id { get; set; }
         public string Des_nombre { get; set; }
+    }
+    public class ResumenCompra
+    {
+        public string NombreUsuario { get; set; }
+        public string Destino  { get; set; }
+        public string FechaIda  { get; set; }
+        public string FechaVuelta  { get; set; }
+        public string Hora  { get; set; }
+        public string TipoViaje { get; set; }
+        public string  ValorTotalPagar { get; set; }
+         public  int Id_Reserva { get; set; }
+
+
     }
 }

@@ -332,7 +332,7 @@ namespace Datos
             }
         }
 
-        public List<OpcionUsuario> OpcionesAdmin(string strconexion, string admin , ref string str_cod_error, ref string str_error_mensaje)
+        public List<OpcionUsuario> OpcionesAdmin(string strconexion, string admin, ref string str_cod_error, ref string str_error_mensaje)
         {
             List<OpcionUsuario> opciones = new List<OpcionUsuario>();
 
@@ -362,7 +362,7 @@ namespace Datos
         }
         public bool EsAdmin(string strconexion, string login, ref string str_cod_error, ref string str_error_mensaje)
         {
-          
+
             using (SqlConnection conn = new SqlConnection(strconexion))
             {
                 string query = "SELECT  EsAdministrador  FROM usuarios   WHERE usu_login = @login ";
@@ -371,17 +371,17 @@ namespace Datos
                 conn.Open();
                 object result = cmd.ExecuteScalar();
                 conn.Close();
-               
+
                 return result != null && Convert.ToBoolean(result);
-             
+
 
 
             }
 
-            
+
         }
-        
-        public int RegistrarReserva(string strconexion, ReservasNuevas reservasNuevas,string login, ref string str_cod_error, ref string str_error_mensaje)
+
+        public int RegistrarReserva(string strconexion, ReservasNuevas reservasNuevas, string login, ref string str_cod_error, ref string str_error_mensaje)
         {
 
             using (SqlConnection con = new SqlConnection(strconexion))
@@ -393,15 +393,16 @@ namespace Datos
                 try
                 {
                     cmd = new SqlCommand("Sp_Insert_Reservas", con);
-                    cmd.Parameters.Add("@Rev_FechaVueloIda", SqlDbType.VarChar,100).Value = reservasNuevas.FechaVueloIda;
-                    cmd.Parameters.Add("@Rev_FechaVueloVuelta", SqlDbType.VarChar,100).Value = reservasNuevas.FechaVueloVuelta;
+                    cmd.Parameters.Add("@Rev_FechaVueloIda", SqlDbType.VarChar, 100).Value = reservasNuevas.FechaVueloIda;
+                    cmd.Parameters.Add("@Rev_FechaVueloVuelta", SqlDbType.VarChar, 100).Value = reservasNuevas.FechaVueloVuelta;
                     cmd.Parameters.Add("@Rev_Horario", SqlDbType.VarChar, 100).Value = reservasNuevas.Horario;
                     cmd.Parameters.Add("@CLas_Id", SqlDbType.Int).Value = reservasNuevas.Clase;
                     cmd.Parameters.Add("@usu_login", SqlDbType.VarChar, 50).Value = login;
                     cmd.Parameters.Add("@Via_id", SqlDbType.Int).Value = reservasNuevas.TipoViaje;
                     cmd.Parameters.Add("@Des_id", SqlDbType.Int).Value = reservasNuevas.Destino;
                     cmd.Parameters.Add("@ReservaConfirmada", SqlDbType.Int).Value = reservasNuevas.ReservaConfirmada;
-                   
+                    cmd.Parameters.Add("@Valorpagar", SqlDbType.Decimal).Value = reservasNuevas.ValorTotalPagar;
+
 
 
 
@@ -437,6 +438,89 @@ namespace Datos
                     str_cod_error = "PrE12";
                     str_cod_error = "Error: " + ex.Message;
                     return 0;
+                }
+                finally
+                {
+                    cmd.Dispose();
+                }
+
+
+
+                //return count > 0;
+            }
+
+
+        }
+        
+        public DataTable InformacionReserva(string strconexion,string login,ref string str_cod_error, ref string str_error_mensaje)
+        {
+
+            using (SqlConnection con = new SqlConnection(strconexion))
+            {
+                SqlCommand cmd = new SqlCommand();
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataTable dt = new DataTable();
+                int cod_error = 0;
+                try
+                {
+                    cmd = new SqlCommand("Sp_informacionReserva", con);
+                    cmd.Parameters.Add("@usu_login", SqlDbType.VarChar, 100).Value = login;
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    da.SelectCommand = cmd;
+                    da.Fill(dt);
+
+                    return dt;
+
+
+
+                }
+                catch (Exception ex)
+                {
+                    str_cod_error = "PrE12";
+                    str_cod_error = "Error: " + ex.Message;
+                    return null;
+                }
+                finally
+                {
+                    cmd.Dispose();
+                }
+
+
+
+                //return count > 0;
+            }
+
+
+        }
+        public DataTable InformacionReservaAdmin(string strconexion,  ref string str_cod_error, ref string str_error_mensaje)
+        {
+
+            using (SqlConnection con = new SqlConnection(strconexion))
+            {
+                SqlCommand cmd = new SqlCommand();
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataTable dt = new DataTable();
+                int cod_error = 0;
+                try
+                {
+                    cmd = new SqlCommand("Sp_informacionReservasAdmin", con);
+                   
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    da.SelectCommand = cmd;
+                    da.Fill(dt);
+
+                    return dt;
+
+
+
+                }
+                catch (Exception ex)
+                {
+                    str_cod_error = "PrE12";
+                    str_cod_error = "Error: " + ex.Message;
+                    return null;
                 }
                 finally
                 {
