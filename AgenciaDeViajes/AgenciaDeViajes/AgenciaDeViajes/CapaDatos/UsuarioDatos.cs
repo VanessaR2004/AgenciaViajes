@@ -365,14 +365,19 @@ namespace Datos
 
             using (SqlConnection conn = new SqlConnection(strconexion))
             {
-                string query = "SELECT  EsAdministrador  FROM usuarios   WHERE usu_login = @login ";
+                string query = "SELECT  usu_Administrador  FROM usuarios   WHERE usu_login = @login ";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@login", login);
                 conn.Open();
                 object result = cmd.ExecuteScalar();
                 conn.Close();
 
-                return result != null && Convert.ToBoolean(result);
+                bool resultadoBool;
+                if (result != null && bool.TryParse(result.ToString(), out resultadoBool))
+                {
+                    return resultadoBool;
+                }
+                return false;
 
 
 
